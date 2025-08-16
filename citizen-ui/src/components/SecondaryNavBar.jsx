@@ -1,62 +1,97 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { useSalaryForm } from "../hooks/UseSalaryForm";
+import { useScrollHeader } from "../hooks/UseScrollHeader";
+import ProgressIndicator from "../components/ui/ProgressIndicator";
+import PersonalInformationStep from "../components/Steps/PersonalInformationStep";
+import AdditionalInformationStep from "../components/Steps/AdditionalInformationStep";
+import NavigationButtons from "../components/NavigationButtons";
+import { useNavigate } from "react-router-dom";
 
-function SecondaryNavBar({
-  value,
-  onChange,
-  items = [
-    { label: "All" },
-    { label: "Completed" },
-    { label: "Pending" },
-    { label: "Rejected" },
-  ],
-}) {
-  const [internal, setInternal] = useState(0);
-  const controlled = typeof value === "number";
-  const active = controlled ? value : internal;
+const SalaryParticularPage = () => {
+  const {
+    currentStep,
+    formData,
+    handleInputChange,
+    nextStep,
+    prevStep,
+    resetForm,
+  } = useSalaryForm();
+  const { formRef, scrolled } = useScrollHeader();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (controlled) return;
-    setInternal(0);
-  }, [controlled]);
+  const handleBack = () => {
+    if (currentStep === 1) {
+      navigate("/");
+    } else {
+      prevStep();
+    }
+  };
 
-  const setActive = (i) => {
-    if (onChange) onChange(i);
-    if (!controlled) setInternal(i);
+  const handleNext = () => {
+    nextStep();
+  };
+
+  const handleCancel = () => {
+    resetForm();
+    navigate("/");
+  };
+
+  const handleSubmit = () => {
+    console.log("Submit Request:", formData);
+    resetForm();
+    navigate("/");
   };
 
   return (
-    <nav className="mx-[10px] rounded-full bg-white/5 px-[10px] py-2 shadow-[inset_0_1px_0_rgba(255,255,255,.45),0_10px_40px_rgba(0,0,0,.25)] ring-1 ring-white/10 backdrop-blur-xl">
-      <div className={`relative grid grid-cols-${items.length}`}>
-        <span
-          className="pointer-events-none absolute inset-y-1 w-1/4 rounded-full bg-gradient-to-b from-[#2F7496]/70 from-0% to-[#0F2530]/70 to-100% transition-transform duration-300 ease-out"
-          style={{
-            transform: `translateX(${active * 100}%)`,
-            width: `${100 / items.length}%`,
-          }}
-        />
-        {items.map(({ label }, index) => {
-          const isActive = index === active;
-          return (
-            <Link
-              key={label}
-              type="button"
-              onClick={() => setActive(index)}
-              className="z-10 flex items-center justify-center py-3 text-sm"
-            >
-              <span
-                className={
-                  isActive ? "font-bold text-white" : "font-semibold opacity-80"
-                }
-              >
-                {label}
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-    </nav>
-  );
-}
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950 p-4">
+      <div
+        className="relative flex w-full max-w-sm flex-col overflow-hidden rounded-3xl bg-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,.45),0_10px_40px_rgba(0,0,0,.25)] backdrop-blur-xl"
+        style={{ height: "812px", width: "375px" }}
+      >
+        {/* Header */}
+        <div className="py-6 text-center">
+          <h1 className="text-2xl font-bold text-white">Salary Particular</h1>
+          <ProgressIndicator currentStep={currentStep} totalSteps={2} />
+        </div>
 
-export default SecondaryNavBar;
+        {/* Form Container */}
+        <div ref={formRef} className="flex-1 overflow-hidden px-6">
+          <div className="h-full overflow-y-auto rounded-3xl bg-white/5 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.55),0_8px_32px_rgba(0,0,0,.25)] backdrop-blur-sm">
+            {!scrolled && (
+              <h2 className="mb-6 py-2 text-lg font-semibold text-white/90">
+                {currentStep === 1
+                  ? "Personal Information"
+                  : "Additional Information"}
+              </h2>
+            )}
+            {currentStep === 1 ? (
+              <PersonalInformationStep
+                formData={formData}
+                handleInputChange={handleInputChange}
+              />
+            ) : (
+              <AdditionalInformationStep
+                formData={formData}
+                handleInputChange={handleInputChange}
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div className="space-y-3 px-6 py-4">
+          <NavigationButtons
+            currentStep={currentStep}
+            onBack={handleBack}
+            onNext={handleNext}
+            onCancel={handleCancel}
+            onSubmit={handleSubmit}
+            canSubmit={formData.informationAccurate}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SalaryParticularPage;

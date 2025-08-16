@@ -25,7 +25,7 @@ function requireAuth() {
   return null;
 }
 
-/*const router = createBrowserRouter([
+const router = createBrowserRouter([
   // Public routes - no authentication required
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
@@ -51,21 +51,6 @@ function requireAuth() {
 
   // Catch-all redirect
   { path: "*", loader: () => redirect("/login") },
-]);*/
-
-const router = createBrowserRouter([
-  {
-    path: "/*",
-    element: <Home />,
-  },
-  {
-    path: "Salary",
-    element: <SalaryParticularPage />,
-  },
-  {
-    path: "travel",
-    element: <TravelWarrantForm />,
-  },
 ]);
 
 export default router;

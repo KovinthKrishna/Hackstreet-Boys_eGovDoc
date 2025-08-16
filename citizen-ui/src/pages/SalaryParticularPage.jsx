@@ -1,7 +1,7 @@
 import React from "react";
 import { useSalaryForm } from "../hooks/UseSalaryForm";
 import { useScrollHeader } from "../hooks/UseScrollHeader";
-import StatusBar from "../components/ui/StatusBar";
+
 import ProgressIndicator from "../components/ui/ProgressIndicator";
 import PersonalInformationStep from "../components/Steps/PersonalInformationStep";
 import AdditionalInformationStep from "../components/Steps/AdditionalInformationStep";
@@ -45,13 +45,14 @@ const SalaryParticularPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+    <div
+      className="flex min-h-screen items-center justify-center p-4"
+      style={{ background: "#3A66A3" }}
+    >
       <div
-        className="relative flex w-full max-w-sm flex-col overflow-hidden rounded-3xl bg-gradient-to-b from-blue-100 to-blue-300 shadow-2xl"
+        className="relative flex w-full max-w-sm flex-col overflow-hidden rounded-3xl bg-white/10 shadow-2xl backdrop-blur-sm"
         style={{ height: "812px", width: "375px" }}
       >
-        <StatusBar />
-
         {/* Header */}
         <div className="py-6 text-center">
           <h1 className="text-2xl font-bold text-black">Salary Particular</h1>
@@ -93,11 +94,6 @@ const SalaryParticularPage = () => {
             onSubmit={handleSubmit}
             canSubmit={formData.informationAccurate}
           />
-        </div>
-
-        {/* Home Indicator */}
-        <div className="flex justify-center pb-2">
-          <div className="h-1 w-32 rounded-full bg-black/30"></div>
         </div>
       </div>
     </div>
