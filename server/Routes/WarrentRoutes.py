@@ -42,13 +42,14 @@ async def create_warrent(
     AppointmentDate: str = Form(...),
     AppointmentTime: str = Form(...),
     Area: str = Form(...),
+    UserId: str = Form(...),
     files: Optional[List[UploadFile]] = File(None),
 ):
     from Schemas.WarrentSchema import CreateWarrentSchema
     from datetime import datetime
 
-    user_id = str(current_user.id)
-    print(dir(current_user))
+    user_id = UserId
+    
 
     warrent = CreateWarrentSchema(
         fullname=fullname,
@@ -98,7 +99,6 @@ async def create_appointment(
 @warrent_router.get("/gs/requests/{gs_handler_id}", response_model=List[dict])
 async def get_gs_requests(gs_handler_id: str):
     from Controllers.WarrentController import get_requests_for_gs
-
     return await get_requests_for_gs(gs_handler_id)
 
 
