@@ -1,4 +1,3 @@
-// hooks/useScrollHeader.js
 import { useState, useRef, useEffect } from 'react';
 
 export const useScrollHeader = () => {
