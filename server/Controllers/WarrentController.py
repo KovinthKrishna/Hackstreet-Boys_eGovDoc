@@ -95,7 +95,7 @@ async def _create_warrent_request(warrent_data: CreateWarrentSchema, warrent_id:
                 raise HTTPException(status_code=500, detail="Failed to create service")
 
         # Find request handler based on area
-        requestHandler = await employees_collection.find_one({"DSDivision": warrent_data.Area})
+        requestHandler = await employees_collection.find_one({"GSDivision": warrent_data.Area})
         
         # Set default handler if none found for the area
         handler_id = None

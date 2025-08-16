@@ -42,13 +42,14 @@ async def create_warrent(
     AppointmentDate: str = Form(...),
     AppointmentTime: str = Form(...),
     Area: str = Form(...),
+    UserId: str = Form(...),
     files: Optional[List[UploadFile]] = File(None),
 ):
     from Schemas.WarrentSchema import CreateWarrentSchema
     from datetime import datetime
 
-    user_id = str(current_user.id)
-    print(dir(current_user))
+    user_id = UserId
+    
 
     warrent = CreateWarrentSchema(
         fullname=fullname,

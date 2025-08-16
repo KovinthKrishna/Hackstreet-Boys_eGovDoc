@@ -1,12 +1,11 @@
-import React from "react";
-import { useSalaryForm } from "../hooks/UseSalaryForm";
-import { useScrollHeader } from "../hooks/UseScrollHeader";
-import StatusBar from "../components/ui/StatusBar";
-import ProgressIndicator from "../components/ui/ProgressIndicator";
-import PersonalInformationStep from "../components/Steps/PersonalInformationStep";
-import AdditionalInformationStep from "../components/Steps/AdditionalInformationStep";
-import NavigationButtons from "../components/NavigationButtons";
 import { useNavigate } from "react-router-dom";
+import NavigationButtons from "../components/NavigationButtons";
+import AdditionalInformationStep from "../components/Steps/AdditionalInformationStep";
+import PersonalInformationStep from "../components/Steps/PersonalInformationStep";
+import ProgressIndicator from "../components/ui/ProgressIndicator";
+import StatusBar from "../components/ui/StatusBar";
+import { useSalaryForm } from "../hooks/useSalaryForm";
+import { useScrollHeader } from "../hooks/useScrollHeader";
 const SalaryParticularPage = () => {
   const {
     currentStep,
