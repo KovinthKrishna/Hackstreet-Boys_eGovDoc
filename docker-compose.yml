@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: egovdoc-api
+    environment:
+      - JWT_SECRET=JgviZ0ny5JiAvjrXmQwg/aWpwUX1TdbBszqS7e0uEsg=
+      - JWT_ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - SENDER_PASSWORD=pfalvuyuumzlecjo
+      - SENDER_EMAIL=triatholan22@gmail.com
+    ports:
+      - "8000:8000"
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+
+  citizen-ui:
+    build:
+      context: ./citizen-ui
+      dockerfile: Dockerfile
+    container_name: egovdoc-citizen-ui
+    environment:
+      - VITE_API_BASE=http://api:8000
+    ports:
+      - "5173:5173"
+    command: npm run dev -- --host --port 5173
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  department-ui:
+    build:
+      context: ./department-ui
+      dockerfile: Dockerfile
+    container_name: egovdoc-department-ui
+    environment:
+      - VITE_API_BASE=http://api:8000
+    ports:
+      - "5174:5174"
+    command: npm run dev -- --host --port 5174
+    depends_on:
+      - api
+    restart: unless-stopped
+
+networks:
+  default:
+    name: egovdoc-net
+    driver: bridge
