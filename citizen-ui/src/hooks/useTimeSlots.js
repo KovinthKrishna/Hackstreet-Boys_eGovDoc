@@ -1,4 +1,3 @@
-// hooks/useTimeSlots.js
 import { useState, useEffect } from 'react';
 
 export const useTimeSlots = (completionDate) => {

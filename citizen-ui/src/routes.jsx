@@ -12,6 +12,7 @@ import AccountPage from "./pages/AccountPage";
 import TravelWarrantForm from "./pages/TravelWarrant";
 import SalaryParticularPage from "./pages/SalaryParticularPage";
 import AppLayout from "./components/AppLayout";
+import { Home } from "lucide-react";
 
 // Simple auth gate using presence of localStorage egovdoc:user
 function requireAuth() {
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
   { path: "/reset-password", element: <ResetPassword /> },
   { path: "/enter-phone", element: <EnterPhoneNumber /> },
   { path: "/verify-otp", element: <VerifyOTP /> },
-  
+
   // Protected routes - with authentication and layout
   {
     path: "/",
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
       { path: "salary-particular", element: <SalaryParticularPage /> },
     ],
   },
-  
+
   // Catch-all redirect
   { path: "*", loader: () => redirect("/login") },
 ]);
